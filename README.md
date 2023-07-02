@@ -2,15 +2,23 @@
 
 I have successfully tackled a wide range of programming topics and have developed proficiency in various algorithms and data structures. Here is a brief description of the areas I have covered:
 
-Array: Manipulating and working with arrays efficiently.  
-BFS (Breadth-First Search): Traversing and exploring graphs using the BFS algorithm.  
-Backtracking: Employing backtracking techniques to solve problems by exploring all possible solutions.     
-BinarySearch: Implementing binary search algorithms for efficient searching in sorted arrays.  
-BinarySearchTrees: Understanding and working with binary search trees, including operations like insertion, deletion, and searching.  
-BitManipulation: Manipulating bits and performing bitwise operations for various applications.  
-Contest: Participating in programming contests and competitions.    
-DFS (Depth-First Search): Traversing and exploring graphs using the DFS algorithm.  
-DailyQuestion: Solving daily programming questions and challenges to enhance problem-solving skills.  
+=> Array: Manipulating and working with arrays efficiently.  
+
+=> BFS (Breadth-First Search): Traversing and exploring graphs using the BFS algorithm.  
+
+=> Backtracking: Employing backtracking techniques to solve problems by exploring all possible solutions.     
+
+=> BinarySearch: Implementing binary search algorithms for efficient searching in sorted arrays.  
+
+=> BinarySearchTrees: Understanding and working with binary search trees, including operations like insertion, deletion, and searching.  
+
+=> BitManipulation: Manipulating bits and performing bitwise operations for various applications.  
+
+=> Contest: Participating in programming contests and competitions.    
+
+=> DFS (Depth-First Search): Traversing and exploring graphs using the DFS algorithm.  
+
+=> DailyQuestion: Solving daily programming questions and challenges to enhance problem-solving skills.  
 Design: Creating efficient and scalable designs for software systems and applications.  
 DisjointSet: Implementing and utilizing disjoint-set data structures for efficient set operations.    
 DivideAndConquer: Solving problems by breaking them into smaller subproblems and combining the results.  
