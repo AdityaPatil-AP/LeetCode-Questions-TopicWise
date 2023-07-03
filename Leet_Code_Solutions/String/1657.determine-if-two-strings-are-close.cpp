@@ -26,6 +26,7 @@ public:
         //         return false;
         //     }
         // }
+
         // sort(freq1.begin(), freq1.end());
         // sort(freq2.begin(), freq2.end());
         // if(freq1 == freq2){
@@ -36,24 +37,30 @@ public:
         // Improved solution by using vector<int> of size 26 and set.
         // To store the frequencies of all characters for both the word.
         vector<int> freq1(26, 0), freq2(26, 0);
-        // Also the characters present in both the strings must be similar.
-        // No need of set.
 
-        for (auto x : word1)
+        // Now first we need to make sure that elements present in word1
+        // are all present in element 2.
+
+        for (auto i : word1)
         {
-            freq1[x - 'a']++;
+            freq1[i - 'a']++;
         }
-        for (auto x : word2)
+
+        for (auto i : word2)
         {
-            if (freq1[x - 'a'] == 0)
+            // checking if this character is present in word1 as well or not.
+            // Because transform can only be applied for the characters present
+            // in the word1.
+            if (freq1[i - 'a'] == 0)
             {
                 return false;
             }
-            freq2[x - 'a']++;
+
+            freq2[i - 'a']++;
         }
 
-        sort(freq1.begin(), freq1.end());
-        sort(freq2.begin(), freq2.end());
+        sort(begin(freq1), end(freq1));
+        sort(begin(freq2), end(freq2));
 
         return (freq1 == freq2);
     }
