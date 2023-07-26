@@ -15,8 +15,8 @@ public:
 
     int minSpeedOnTime(vector<int> &dist, double hour)
     {
-        // This minimum speed can be anything between 0 and 1e7
-
+        // This minimum speed can be anything between 0 and 1e7.
+        // So applying Binary Search as we can divide the search spaces.
         int low = 1, high = 1e7;
         if ((double)dist.size() > hour + 1)
         {
