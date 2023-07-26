@@ -3,5 +3,6 @@
         "*.js": "javascript",
         "vector": "cpp",
         "iostream": "cpp"
-    }
+    },
+    "liveServer.settings.port": 5501
 }
