@@ -10,6 +10,7 @@ public:
     }
 
 private:
+    // Combinations.
     void generateCombinations(int start, int n, int k, vector<int> &combination, vector<vector<int>> &result)
     {
         if (k == 0)
