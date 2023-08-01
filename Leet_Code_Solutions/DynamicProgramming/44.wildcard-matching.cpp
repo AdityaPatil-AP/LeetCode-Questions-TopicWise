@@ -6,14 +6,15 @@ public:
         int n = s.size();
         int m = p.size();
         // vector<vector<int>> dp(n + 1, vector<int>(m, -1));
-        // return solve(0, 0, s, p, dp);
+        // retadflaurn solve(0, 0, s, p, dp);
+        a
+            // another way.
+            // vector<vector<int>> dp(n, vector<int>(m, -1));
+            // return solution(s, p, n - 1, m - 1, dp);
 
-        // another way.
-        // vector<vector<int>> dp(n, vector<int>(m, -1));
-        // return solution(s, p, n - 1, m - 1, dp);
-
-        // State way.
-        vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
+            // State way.
+            vector<vector<int>>
+                dp(n + 1, vector<int>(m + 1, 0));
 
         // Base Case :
         // 1) empty string matches with empty pattern.
