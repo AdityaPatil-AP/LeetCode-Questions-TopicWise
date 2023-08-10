@@ -1,39 +1,53 @@
 class Solution
 {
 public:
+    bool existsInFirst(vector<int> &nums, int start, int element)
+    {
+        return nums[start] <= element;
+    }
+
     int search(vector<int> &nums, int target)
     {
-        int low = 0, high = nums.size() - 1;
+        // Editorial Approach.
+        int n = nums.size();
+        int end = n - 1;
+        int start = 0;
 
-        while (low <= high)
+        while (start <= end)
         {
-            int mid = (low + high) / 2;
+            int mid = start + (end - start) / 2;
 
             if (nums[mid] == target)
             {
                 return mid;
             }
 
-            if (nums[low] <= nums[mid])
-            {
-                if (nums[low] <= target && target < nums[mid])
+            // Which array does pivot belong to.
+            bool pivotArray = existsInFirst(nums, start, nums[mid]);
+
+            // Which array does target belong to.
+            bool targetArray = existsInFirst(nums, start, target);
+
+            if (pivotArray ^ targetArray)
+            { // If pivot and target both exist in different sorted arrays.
+                if (pivotArray)
                 {
-                    high = mid - 1;
+                    start = mid + 1; // pivot in the first, target in the second.
                 }
                 else
                 {
-                    low = mid + 1;
+                    end = mid - 1;
                 }
             }
             else
-            {
-                if (nums[mid] < target && target <= nums[high])
+            { // If pivot and target exists in the same array.
+                if (nums[mid] > target)
                 {
-                    low = mid + 1;
+                    end = mid - 1;
                 }
                 else
                 {
-                    high = mid - 1;
+                    start = mid + 1;
                 }
             }
         }
