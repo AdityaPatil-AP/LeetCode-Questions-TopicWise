@@ -1,23 +1,26 @@
-from collections import Counter
+from threading import *
+import time
 
-def get_words_from_string(text):
-    words = text.split()
-    return words
+lock = Lock()
+count = 0
 
-def helper(text, k):
-    words = get_words_from_string(text)
-    word_counts = Counter(words)
-    ans = []
-    for word in words:
-        if word_counts[word] >= k:
-            ans.append(word)
-            word_counts[word] = 0
-    return ans
+def task():
+    # lock.acquire()
+    global count 
+    for i in range(1000000):
+        count += 1
+    # lock.acquire()
+
 
 if __name__ == '__main__':
-    text = "hello the a a the the is ohkay ohkay hello"
-    ans = helper(text, 2)
 
-    for word in ans:
-        print(word, end=" ")
-    print()
+    t1 = Thread(target=task)
+    t2 = Thread(target=task)
+
+    t1.start()
+    t2.start()
+    t1.join()
+    t2.join()
+
+    print(count)
+
