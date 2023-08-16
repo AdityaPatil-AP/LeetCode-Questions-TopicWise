@@ -3,9 +3,10 @@ class Solution
 public:
     ListNode *partition(ListNode *head, int x)
     {
-        ListNode before(0), after(0);
-        ListNode *before_curr = &before;
+        ListNode after(0), before(0);
+
         ListNode *after_curr = &after;
+        ListNode *before_curr = &before;
 
         while (head)
         {
@@ -19,6 +20,7 @@ public:
                 after_curr->next = head;
                 after_curr = head;
             }
+
             head = head->next;
         }
 
