@@ -1,6 +1,9 @@
 
 using namespace std;
 #include <bits/stdc++.h>
+
+int a = 10 + 15;
+
 bool comp(int &a, int &b)
 {
     if (a % 2 == 0 && b % 2 == 1)
@@ -21,7 +24,7 @@ vector<int> funcArrange(vector<int> inputArr)
     return inputArr;
 }
 
-int main()
-{
-    return 0;
-}
+// int main()
+// {
+//     return 0;
+// }

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <thread>
 #include <unistd.h>
+#include "demo1.cpp"
 
 using namespace std;
 
@@ -26,10 +27,13 @@ void taskB()
 
 int main()
 {
-    thread t1(taskA);
-    thread t2(taskB);
+    // thread t1(taskA);
+    // thread t2(taskB);
 
-    t2.join();
-    t1.join();
+    // t2.join();
+    // t1.join();
+
+    extern int a;
+    cout << a << endl;
     return 0;
 }
