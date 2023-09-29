@@ -1,30 +1,36 @@
-
+// Online C++ compiler to run C++ program online
+#include <iostream>
 using namespace std;
-#include <bits/stdc++.h>
 
-int a = 10 + 15;
-
-bool comp(int &a, int &b)
-{
-    if (a % 2 == 0 && b % 2 == 1)
-    {
-        return true;
+class a{
+    public:
+    int add(int a, int b){
+        cout << "Inside a" << endl;
+        return a + b;
     }
-    if (a % 2 == 0 && b % 2 == 0 && a <= b)
-    {
-        return true;
+};
+
+class b : public a{
+    public:
+    int add(int a, int b){
+        cout << "Inside b" << endl;
+        return a + b;
     }
-    return false;
+};
+
+int main() {
+    // Write C++ code here
+    int (a::*funcPtr1)(int, int) = &a::add;
+    int (b::*funcPtr2)(int, int) = &b::add;
+    
+    a obj1;
+    b obj2;
+    
+    cout << funcPtr1 << endl;
+    cout << funcPtr2 << endl;
+    
+    cout << (obj1.*funcPtr1)(5, 10) << endl;
+    cout << (obj2.*funcPtr2)(5, 10) << endl;
+    
+    return 0;
 }
-
-vector<int> funcArrange(vector<int> inputArr)
-{
-    sort(inputArr.begin(), inputArr.end(), comp);
-
-    return inputArr;
-}
-
-// int main()
-// {
-//     return 0;
-// }
