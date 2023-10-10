@@ -3,45 +3,57 @@ class Solution
 public:
     int minOperations(vector<int> &nums)
     {
-        // Sort the array.
-        sort(nums.begin(), nums.end());
-
-        // For array to be continuous, all element unique and difference between
-        // maximum and minimum element is (n - 1).
-        // Which means the element are in the order,
-        // (min, min + 1, min + 2, .... , min + (n - 1));
-
-        // Those which are present in this part will not be required to change if present in the array.
-        // others have to changed to unselected values in this range.
-
-        // This procedure needs to done for every value in nums[i].
-
         int n = nums.size();
 
-        int minOp = n;
-        // There may be duplicate values which should not be there.
-        set<int> st;
-        for (auto it : nums)
-            st.insert(it);
-        nums.clear();
-        for (auto it : st)
-            nums.push_back(it);
+        set<int> st(nums.begin(), nums.end());
 
-        for (int i = 0; i < nums.size(); i++)
+        // Creation of Duplicates free array.
+        vector<int> arr(st.begin(), st.end());
+        // Sorting it.
+        sort(arr.begin(), arr.end());
+
+        // Using Binary Search. Searching -> O(logn).
+        // Keeping track of minimum operations.
+        // Initially it would be
+        // int minOperations = n;
+        // int m = arr.size();
+        // for(int i = 0;i < m;i++){
+        //     // Creating a range to search for desired numbers.
+        //     int left = arr[i];
+        //     int right = left + (n - 1);
+
+        //     int j = upper_bound(arr.begin(), arr.end(), right) - arr.begin();
+
+        //     // Numbers in desired range.
+        //     int desiredCount = j - i;
+
+        //     // Numbers to be replaced;
+        //     int replaceCount = n - desiredCount;
+
+        //     minOperations = min(minOperations, replaceCount);
+        // }
+
+        // Searching for an individual range is O(1) considered overall.
+        // Using Sliding Window.
+        int minOperations = n;
+        int m = arr.size();
+        int j = 0; // Points to next bigger element ahead of right for range of
+        // [left, right].
+        for (int i = 0; i < m; i++)
         {
-            int curr = nums[i];
-            int last = nums[i] + n - 1;
+            int left = arr[i];
+            int right = left + (n - 1);
 
-            int j = upper_bound(nums.begin() + i, nums.end(), last) - (nums.begin());
-            j--;
+            while (j < m && arr[j] <= right)
+            {
+                j++;
+            }
 
-            int idx = j;
+            int desiredCount = j - i;
 
-            int currOp = (n - (idx - i + 1));
-
-            minOp = min(minOp, currOp);
+            minOperations = min(minOperations, n - desiredCount);
         }
 
-        return minOp;
+        return minOperations;
     }
 };
