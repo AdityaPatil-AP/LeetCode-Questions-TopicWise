@@ -29,6 +29,8 @@ public:
         for (int i = 0; i < n; i++)
         {
             int low = 0, high = temp.size() - 1;
+            // Using this logic, the low will always point to the next
+            // greater element of obstacles[i] or to the end of the array.
             while (low <= high)
             {
                 int mid = (low + high) / 2;

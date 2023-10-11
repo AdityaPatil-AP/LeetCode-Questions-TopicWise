@@ -50,3 +50,62 @@ public:
         return ans;
     }
 };
+
+class Solution
+{
+public:
+    static bool compareT(pair<int, int> &p1, pair<int, int> &p2)
+    {
+        if (p1.second < p2.second)
+        {
+            return true;
+        }
+        if (p1.second == p2.second)
+        {
+            if (p1.first <= p2.first)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        return false;
+    }
+
+    int bestTeamScore(vector<int> &scores, vector<int> &ages)
+    {
+        // We have to create pairs of players.
+        // we have to use the concept of prefix sum.
+        int n = scores.size();
+        vector<pair<int, int>> team;
+
+        for (int i = 0; i < n; i++)
+        {
+            team.push_back({scores[i], ages[i]});
+        }
+
+        sort(team.begin(), team.end(), compareT);
+
+        vector<int> dp(n, 0);
+
+        dp[0] = team[0].first;
+
+        for (int i = 1; i < n; i++)
+        {
+            for (int j = i - 1; j >= 0; j--)
+            {
+                if (team[j].first <= team[i].first)
+                    dp[i] = max(dp[i], team[i].first + dp[j]);
+            }
+            if (dp[i] == 0)
+            {
+                dp[i] = team[i].first;
+            }
+        }
+
+        return *max_element(dp.begin(), dp.end());
+    }
+};
