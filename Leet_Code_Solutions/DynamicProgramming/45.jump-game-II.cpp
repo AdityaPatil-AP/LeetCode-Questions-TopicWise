@@ -38,3 +38,29 @@ public:
         return answer;
     }
 };
+
+class Solution
+{
+public:
+    int jump(vector<int> &nums)
+    {
+        int jumps = 0;
+        int maxjump = 0;
+        int n = nums.size();
+        int i = 0;
+        while (i < n)
+        {
+            int currjump = maxjump;
+            jumps++;
+            while (i < n && i <= currjump)
+            {
+                int newjump = i + nums[i];
+
+                maxjump = max(maxjump, newjump);
+                i++;
+            }
+        }
+
+        return (jumps - 1);
+    }
+};
