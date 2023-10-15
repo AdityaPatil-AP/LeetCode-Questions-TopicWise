@@ -73,6 +73,8 @@ public:
         // lis -> lis[i] indicates the longest increasing subsequence till index i.
         // parent[i] -> indicates the parent[i] where it was part
         vector<int> lis(n, 1);
+
+        // Parent helps us to find the previous valid word for this subsequence.
         vector<int> parent(n);
 
         int max_index = 0;
@@ -83,8 +85,11 @@ public:
             parent[i] = i;
             for (int j = i - 1; j >= 0; j--)
             {
+                // If all conditions are satisfied.
                 if (groups[i] != groups[j] && words[i].size() == words[j].size() && calculate_hamDist(words[i], words[j]) == 1)
                 {
+
+                    // Update the subsequence if it is larger than the previous one.
                     if (lis[j] + 1 > lis[i])
                     {
                         parent[i] = j;
