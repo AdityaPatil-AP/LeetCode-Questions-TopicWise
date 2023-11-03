@@ -1,22 +1,55 @@
-#include <iostream>
-
+#include <bits/stdc++.h>
 using namespace std;
 
+int calculateDiameter(vector<vector<int>> &graph, int startVertex)
+{
+    int n = graph.size();
+    vector<int> distance(n, -1);
+
+    queue<int> q;
+    q.push(startVertex);
+
+    distance[startVertex] = 0;
+
+    while (!q.empty())
+    {
+        int u = q.front();
+        q.pop();
+
+        for (int v : graph[u])
+        {
+            if (distance[v] == -1)
+            {
+                distance[v] = distance[u] + 1;
+                q.push(v);
+            }
+        }
+    }
+
+    int maxDistance = *max_element(distance.begin(), distance.end());
+    return maxDistance;
+}
+
+int findGraphDiameter(vector<vector<int>> &graph)
+{
+    int diameter = 0;
+    int n = graph.size();
+
+    for (int startVertex = 0; startVertex < n; startVertex++)
+    {
+        int maxDistance = calculateDiameter(graph, startVertex);
+        diameter = max(diameter, maxDistance);
+    }
+
+    return diameter;
+}
+            
 int main()
 {
+    int n, m;
+    cin >> n >> m;
     
-    int var1 = 40, var2 = 80;
-    try
-    {
-        cin >> var1 >> var2;
-        if (var2 == 0)
-            throw var2;
-        else
-            cout << var2 % var1;
-    }
-    catch (exception e)
-    {
-    }
+    vector<vector<int>> graph(n);
 
     return 0;
 }
