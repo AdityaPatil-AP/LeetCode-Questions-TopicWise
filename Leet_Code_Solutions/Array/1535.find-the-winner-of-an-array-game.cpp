@@ -3,35 +3,35 @@ class Solution
 public:
     int getWinner(vector<int> &arr, int k)
     {
-        int maxElement = arr[0];
-        queue<int> queue;
+        int max_element = arr[0];
+        queue<int> q;
         for (int i = 1; i < arr.size(); i++)
         {
-            maxElement = max(maxElement, arr[i]);
-            queue.push(arr[i]);
+            max_element = max(arr[i], max_element);
+            q.push(arr[i]);
         }
 
         int curr = arr[0];
         int winstreak = 0;
 
-        while (!queue.empty())
+        while (!q.empty())
         {
-            int opponent = queue.front();
-            queue.pop();
+            int opponent = q.front();
+            q.pop();
 
             if (curr > opponent)
             {
-                queue.push(opponent);
+                q.push(opponent);
                 winstreak++;
             }
             else
             {
-                queue.push(curr);
+                q.push(curr);
                 curr = opponent;
                 winstreak = 1;
             }
 
-            if (winstreak == k || curr == maxElement)
+            if (winstreak == k || curr == max_element)
             {
                 return curr;
             }

@@ -17,7 +17,6 @@ public:
     int reserve()
     {
         int smallestSeat = pq.top();
-        st.insert(smallestSeat);
         pq.pop();
 
         return smallestSeat;
@@ -26,17 +25,6 @@ public:
     void unreserve(int seatNumber)
     {
         // Remove this reserved seat.
-        st.erase(st.find(seatNumber));
-
         pq.push(seatNumber);
     }
 };
-
-/**
- * @brief
- *
- */
-*SeatManager *obj = new SeatManager(n);
-*int param_1 = obj->reserve();
-*obj->unreserve(seatNumber);
-* /
