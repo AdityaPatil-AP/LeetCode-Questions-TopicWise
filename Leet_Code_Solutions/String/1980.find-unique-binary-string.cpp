@@ -73,3 +73,68 @@ public:
         return num;
     }
 };
+
+class Solution
+{
+public:
+    string findDifferentBinaryString(vector<string> &nums)
+    {
+        unordered_set<int> integers;
+        for (string num : nums)
+        {
+            integers.insert(stoi(num, nullptr, 2));
+        }
+
+        int n = nums.size();
+
+        for (int num = 0; num <= n; num++)
+        {
+            if (integers.find(num) == integers.end())
+            {
+                string ans = bitset<16>(num).to_string();
+                return ans.substr(16 - n);
+            }
+        }
+
+        // Unreachable position.
+        return "";
+    }
+};
+
+class Solution
+{
+public:
+    unordered_set<int> integers;
+
+    string generate(string curr)
+    {
+        if (curr.size() == integers.size())
+        {
+            int val = stoi(curr, 0, 2);
+            if (integers.find(val) == integers.end())
+            {
+                return curr;
+            }
+
+            return "";
+        }
+
+        string addZero = generate(curr + "0");
+        if (addZero.size() > 0)
+        {
+            return addZero;
+        }
+
+        return generate(curr + "1");
+    }
+
+    string findDifferentBinaryString(vector<string> &nums)
+    {
+        for (auto num : nums)
+        {
+            integers.insert(stoi(num, 0, 2));
+        }
+
+        return generate("");
+    }
+};
