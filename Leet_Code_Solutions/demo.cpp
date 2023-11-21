@@ -1,55 +1,69 @@
+#include <iostream>
 #include <bits/stdc++.h>
+#include <vector>
+#include <unordered_map>
+
 using namespace std;
 
-int calculateDiameter(vector<vector<int>> &graph, int startVertex)
+map<pair<int, int>, int> warehouse_weights;
+map<pair<int, int>, int> memo; // Memoization
+
+long dfs(int node, int parent, vector<vector<pair<int, int>>> &graph, vector<int> &val, long dist)
 {
-    int n = graph.size();
-    vector<int> distance(n, -1);
+    cout << node << " " << parent << endl;
+    long count = 0;
 
-    queue<int> q;
-    q.push(startVertex);
-
-    distance[startVertex] = 0;
-
-    while (!q.empty())
+    for (auto next : graph[node])
     {
-        int u = q.front();
-        q.pop();
-
-        for (int v : graph[u])
+        if (next.first != parent)
         {
-            if (distance[v] == -1)
+            int child = next.first;
+            int weight = next.second;
+
+            if (dist + weight <= val[child - 1])
             {
-                distance[v] = distance[u] + 1;
-                q.push(v);
+                count++;
             }
+
+            count += dfs(child, node, graph, val, dist + weight);
+            count += dfs(child, node, graph, val, 0ll);
         }
     }
 
-    int maxDistance = *max_element(distance.begin(), distance.end());
-    return maxDistance;
+    return count;
 }
 
-int findGraphDiameter(vector<vector<int>> &graph)
+long countCompatiblePairs(int warehouse_nodes, const vector<int> &warehouse_from, const vector<int> &warehouse_to, const vector<int> &warehouse_weight, vector<int> &val)
 {
-    int diameter = 0;
-    int n = graph.size();
+    vector<vector<pair<int, int>>> graph(warehouse_nodes + 1);
 
-    for (int startVertex = 0; startVertex < n; startVertex++)
+    for (int i = 0; i < warehouse_nodes; i++)
     {
-        int maxDistance = calculateDiameter(graph, startVertex);
-        diameter = max(diameter, maxDistance);
+        int u = warehouse_from[i];
+        int v = warehouse_to[i];
+        int weight = warehouse_weight[i];
+
+        graph[u].push_back({v, weight});
+        graph[v].push_back({u, weight});
     }
 
-    return diameter;
+    long count = 0;
+
+    count = dfs(1, -1, graph, val, 0ll);
+
+    return count;
 }
-            
+
 int main()
 {
-    int n, m;
-    cin >> n >> m;
-    
-    vector<vector<int>> graph(n);
+    int warehouse_nodes = 6;
+    vector<int> warehouse_from = {1, 6, 1, 1, 4};
+    vector<int> warehouse_to = {6, 5, 2, 4, 3};
+    vector<int> warehouse_weight = {4, 1, 3, 2, 1};
+    vector<int> val = {2, 1, 3, 1, 5, 4};
+
+    long totalCompatiblePairs = countCompatiblePairs(warehouse_nodes, warehouse_from, warehouse_to, warehouse_weight, val);
+    cout << "Total Compatible Pairs: " << totalCompatiblePairs << endl;
 
     return 0;
 }
