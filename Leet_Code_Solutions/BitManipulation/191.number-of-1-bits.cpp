@@ -3,7 +3,7 @@ public:
     int hammingWeight(uint32_t n) {
         // Using builtin function.. - for count the number of set bits
         // or bits with value 1.
-        // return __builtin_popcount(n);
+        return __builtin_popcount(n);
         
         // Using right shift operator(>>).
         // We are checking all the bits of the number from right position.
@@ -24,6 +24,6 @@ public:
         // return count;
         
         // Using inbuilt function bitset.
-        return bitset<32>(n).count();
+        // return bitset<32>(n).count();
     }
 };
