@@ -5,35 +5,46 @@
 
 using namespace std;
 
-int minimumPeople(int n, int arr[], int dep[])
+int MOD = 1e9 + 7;
+
+long long countValidSequences(int N, int k)
 {
-    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-
-    for (int i = 0; i < n; i++)
+    // Base case: With k=1, any pair with distinct numbers works.
+    if (k == 1)
     {
-        pq.push({arr[i], 1});
-        pq.push({dep[i], -1});
+        return N * (N - 1);
     }
 
-    int ans = 0;
-    int curr = 0;
-    while (!pq.empty())
+    // Dynamic programming table to store valid sequence counts for each state (N, k).
+    map<pair<int, int>, long long> dp;
+
+    // Iterate over all possible values for the first element in the sequence.
+    for (int i = 1; i <= N; ++i)
     {
-        auto top = pq.top();
-        pq.pop();
-
-        curr += top.second;
-
-        ans = max(ans, curr);
+        // Iterate over all possible remaining values for subsequent elements in the sequence.
+        for (int j = 1; j <= N; ++j)
+        {
+            // Check if the current pair is valid (distinct numbers and unique difference).
+            if (i != j && abs(i - j) != abs(j - dp[make_pair(i, k - 1)]))
+            {
+                // Update the table with the sum of possibilities from previous states.
+                dp[make_pair(i, k)] += (dp[make_pair(i, k - 1)] + countValidSequences(N, k - 1)) % MOD;
+            }
+        }
     }
 
-    return ans;
+    // Return the total valid sequence count for the desired state (N, k).
+    return dp[make_pair(1, k)];
 }
 
 int main()
 {
-    vector<vector<int>> people = {{1, 3}, {2, 7}, {6, 9}};
-    cout << minimumPeople(people, 3) << endl;
+    int N, k;
+    cin >> N >> k;
+
+    long long validSequences = countValidSequences(N, k);
+
+    cout << validSequences % MOD << endl;
 
     return 0;
 }
