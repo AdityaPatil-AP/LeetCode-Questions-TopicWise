@@ -29,3 +29,32 @@ public:
         return ans;
     }
 };
+
+class Solution
+{
+public:
+    int maxScore(string s)
+    {
+        int ans = 0;
+
+        int n = s.size();
+
+        vector<int> suffixSum(n, 0);
+        suffixSum[n - 1] = s[n - 1] - '0';
+        for (int i = n - 2; i >= 0; i--)
+        {
+            suffixSum[i] = suffixSum[i + 1] + (s[i] - '0');
+        }
+
+        int zeroCount = 0;
+        for (int i = 0; i < n - 1; i++)
+        {
+            if (s[i] == '0')
+                zeroCount++;
+            int curr = zeroCount + suffixSum[i + 1];
+            ans = max(ans, curr);
+        }
+
+        return ans;
+    }
+};
