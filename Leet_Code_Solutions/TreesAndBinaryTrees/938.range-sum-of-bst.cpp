@@ -9,49 +9,69 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution
-{
+class Solution {
 public:
-    // Recursive DFS Approach
-    // int rangeSumBST(TreeNode* root, int low, int high) {
-    //     if(!root) return 0;
-    //     int leftSum = 0, rightSum = 0;
-    //     if(root->val >= low && root->val <= high){
-    //         leftSum = rangeSumBST(root->left, low, root->val - 1);
-    //         rightSum = rangeSumBST(root->right, root->val + 1, high);
-    //     }
-    //     else if(root->val > high){
-    //         return rangeSumBST(root->left, low, high);
-    //     }
-    //     else if(root->val < low){
-    //         return rangeSumBST(root->right, low, high);
-    //     }
-    //     return root->val + leftSum + rightSum;
-    // }
+    int sum = 0;
 
-    // Iterative Approach Using Stack
-    int rangeSumBST(TreeNode *root, int l, int r)
-    {
-        int rangeSum(0);
-        stack<TreeNode *> st;
+    int rangeSumBST(TreeNode* root, int low, int high) {
+        // int sum = inorder(root, low, high);
+        // return sum;
+
+        // Using Stack
+        stack<TreeNode*> st;
         st.push(root);
-        while (!st.empty())
-        {
-            TreeNode *node = st.top();
+
+        int rangeSum = 0;
+        while(!st.empty()){
+            TreeNode* node = st.top();
             st.pop();
-            if (node->val >= l && node->val <= r)
+
+            if(node->val >= low && node->val <= high){
                 rangeSum += node->val;
-            if (node->val > l)
-            {
-                if (node->left)
-                    st.push(node->left);
             }
-            if (node->val < r)
-            {
-                if (node->right)
+
+            if(node->val > low){
+                if(node->left){
+                    st.push(node->left);
+                }
+            }
+
+            if(node->val < high){
+                if(node->right){
                     st.push(node->right);
+                }
             }
         }
+
         return rangeSum;
+    }
+
+    int inorder(TreeNode* root, int low, int high){
+        if(root == NULL){
+            return 0;
+        }
+        int sum = 0;
+        if(root->left){
+            if(root->left->val < low){
+                sum += inorder(root->left->right, low, high);
+            }
+            else{
+                sum += inorder(root->left, low, high);
+            }
+        }
+
+        if(root->val >= low && root->val <= high){
+            sum += root->val;
+        }
+
+        if(root->right){
+            if(root->right->val > high){
+                sum += inorder(root->right->left, low, high);
+            }
+            else{
+                sum += inorder(root->right, low, high);
+            }
+        }
+        return sum;
     }
 };
