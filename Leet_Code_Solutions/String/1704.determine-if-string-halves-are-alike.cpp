@@ -1,18 +1,22 @@
-string vowels = "aeiouAEIOU";
 
 class Solution
 {
 public:
-    bool halvesAreAlike(string S)
+    bool halvesAreAlike(std::string s)
     {
-        int mid = S.size() / 2, ans = 0;
-        for (int i = 0, j = mid; i < mid; i++, j++)
+        int n = s.size();
+        unordered_set<char> st({'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'});
+
+        int count1 = 0;
+        int count2 = 0;
+        for (int i = 0; i < n / 2; i++)
         {
-            if (~vowels.find(S[i]))
-                ans++;
-            if (~vowels.find(S[j]))
-                ans--;
+            if (st.find(s[i]) != st.end())
+                count1++;
+            if (st.find(s[n / 2 + i]) != st.end())
+                count2++;
         }
-        return ans == 0;
+
+        return (count1 == count2);
     }
 };
