@@ -3,38 +3,39 @@ class Solution
 public:
     int evalRPN(vector<string> &tokens)
     {
-        stack<long> st;
-        for (auto s : tokens)
+        // Reverse Polish Notation -> Postfix Notation.
+        int ans = 0;
+
+        stack<int> st;
+        vector<char> operators = {'/', '*', '+', '-'};
+
+        for (int i = 0; i < tokens.size(); i++)
         {
-            if (s == "+" || s == "-" || s == "/" || s == "*")
+            string curr = tokens[i];
+
+            if (curr == "+" || curr == "/" || curr == "*" || curr == "-")
             {
-                long x = st.top();
+                int second = st.top();
                 st.pop();
-                long y = st.top();
+                int first = st.top();
                 st.pop();
-                if (s == "+")
-                {
-                    st.push(y + x);
-                }
-                else if (s == "-")
-                {
-                    st.push(y - x);
-                }
-                else if (s == "*")
-                {
-                    st.push(y * x);
-                }
-                else
-                {
-                    st.push(y / x);
-                }
+
+                if (curr == "+")
+                    st.push(first + second);
+                if (curr == "-")
+                    st.push(first - second);
+                if (curr == "/")
+                    st.push(first / second);
+                if (curr == "*")
+                    st.push(first * second);
             }
             else
             {
-                int n = stoi(s);
-                st.push(n);
+                int cur = stoi(curr);
+                st.push(cur);
             }
         }
+
         return st.top();
     }
 };
