@@ -1,41 +1,60 @@
 class Solution
 {
 public:
-    std::string decodeAtIndex(string s, int k)
+    vector<int> dailyTemperatures(vector<int> &temperatures)
     {
-        long long length = 0;
-        int i = 0;
+        // O(n^2) solution.
+        // vector<int> ans;
 
-        while (length < k)
+        // int n = temperatures.size();
+        // for(int i = 0;i < n;i++){
+        //     int curr_ans = i;
+        //     for(int j = i + 1;j < n;j++){
+        //         if(temperatures[j] > temperatures[i]){
+        //             curr_ans = j;
+        //             break;
+        //         }
+        //     }
+
+        //     ans.push_back(curr_ans - i);
+        // }
+
+        // return ans;
+
+        // O(n) solution using monotonic stack.
+        deque<int> deque;
+
+        int n = temperatures.size();
+
+        vector<int> ans(n, 0);
+
+        for (int i = n - 1; i >= 0; i--)
         {
-            if (isdigit(s[i]))
+            if (deque.empty())
             {
-                length *= s[i] - '0';
+                deque.push_front(i);
+                ans[i] = 0;
             }
             else
             {
-                length++;
-            }
-            i++;
-        }
-
-        for (int j = i - 1; j >= 0; j--)
-        {
-            if (isdigit(s[j]))
-            {
-                length /= s[j] - '0';
-                k %= length;
-            }
-            else
-            {
-                if (k == 0 || k == length)
+                while (!deque.empty() && temperatures[i] >= temperatures[deque.front()])
                 {
-                    return std::string(1, s[j]); // Convert char to std::string
+                    deque.pop_front();
                 }
-                length--;
+
+                if (deque.empty())
+                {
+                    ans[i] = 0;
+                }
+                else
+                {
+                    ans[i] = deque.front() - i;
+                }
+
+                deque.push_front(i);
             }
         }
 
-        return ""; // Default return, should never reach here given problem constraints
+        return ans;
     }
 };
