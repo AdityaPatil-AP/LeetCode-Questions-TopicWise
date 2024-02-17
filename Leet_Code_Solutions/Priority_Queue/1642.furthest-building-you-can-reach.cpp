@@ -45,67 +45,44 @@ class Solution
 public:
     int furthestBuilding(vector<int> &heights, int bricks, int ladders)
     {
-        int ans = 0;
+        // I cannot use dynamic programming because in variable parameters, bricks value
+        // can go as high as 1e9. which is not possible to store.
+
+        // Using some greedy way.
         int n = heights.size();
-        int l = 0, r = n - 1;
-        while (l <= r)
+
+        priority_queue<int, vector<int>, greater<int>> pq;
+        int extra = 0;
+        for (int i = 1; i < n; i++)
         {
-            int mid = (l + (r - l) / 2);
-            if (isPossible(mid, heights, bricks, ladders))
+            int curr = 0;
+            if (heights[i] > heights[i - 1])
+                curr = heights[i] - heights[i - 1];
+
+            if (pq.size() < ladders)
             {
-                ans = mid;
-                l = mid + 1;
+                pq.push(curr);
             }
             else
             {
-                r = mid - 1;
+                if (!pq.empty() && pq.top() < curr)
+                {
+                    extra += pq.top();
+                    pq.pop();
+                    pq.push(curr);
+                }
+                else
+                {
+                    extra += curr;
+                }
+
+                if (extra > bricks)
+                {
+                    return i - 1;
+                }
             }
         }
 
-        return ans;
-    }
-
-    bool isPossible(int m, vector<int> &heights, int bricks, int ladders)
-    {
-        priority_queue<int> pq;
-        // We have to check if we can reach the mth building.
-        for (int i = 1; i <= m; i++)
-        {
-            if (heights[i - 1] < heights[i])
-            {
-                pq.push(heights[i] - heights[i - 1]);
-            }
-        }
-
-        while (!pq.empty() && (ladders > 0))
-        {
-            ladders--;
-            pq.pop();
-        }
-        // If our priority queue is empty which means we can reach the mth builiding.
-        // Because it is containing those buildings which require a ladder or a block.
-        // But since every building is now given a ladder, we can easily reach the mth building.
-        if (pq.empty())
-            return true;
-
-        while (!pq.empty() && (bricks > 0))
-        {
-            int br = pq.top();
-            pq.pop();
-
-            if (bricks >= br)
-            {
-                bricks -= br;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        if (pq.empty())
-            return true;
-
-        return false;
+        return n - 1;
     }
 };
