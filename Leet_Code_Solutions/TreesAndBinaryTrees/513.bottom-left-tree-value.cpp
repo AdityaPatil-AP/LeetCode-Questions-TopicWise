@@ -9,28 +9,34 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution {
+class Solution
+{
 public:
-    int findBottomLeftValue(TreeNode* root) {
+    int findBottomLeftValue(TreeNode *root)
+    {
         // Using bfs.
 
         int ans = root->val;
 
-        queue<TreeNode*> q;
+        queue<TreeNode *> q;
         q.push(root);
 
-        while(!q.empty()){
+        while (!q.empty())
+        {
             ans = q.front()->val;
             int n = q.size();
-            for(int i = 0;i < n;i++){
-                TreeNode* curr = q.front();
+            for (int i = 0; i < n; i++)
+            {
+                TreeNode *curr = q.front();
                 q.pop();
 
-                if(curr->left) q.push(curr->left);
-                if(curr->right) q.push(curr->right);
+                if (curr->left)
+                    q.push(curr->left);
+                if (curr->right)
+                    q.push(curr->right);
             }
-        }    
+        }
 
-        return ans;    
+        return ans;
     }
 };
