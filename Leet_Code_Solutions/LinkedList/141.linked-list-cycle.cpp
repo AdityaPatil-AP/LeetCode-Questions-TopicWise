@@ -31,3 +31,36 @@ public:
         return false;
     }
 };
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution
+{
+public:
+    bool hasCycle(ListNode *head)
+    {
+        if (head == NULL)
+            return false;
+        ListNode *ahead = head->next;
+        ListNode *behind = head;
+
+        while (ahead != NULL && ahead->next != NULL)
+        {
+            if (ahead == behind)
+            {
+                return true;
+            }
+
+            ahead = ahead->next->next;
+            behind = behind->next;
+        }
+
+        return false;
+    }
+};
